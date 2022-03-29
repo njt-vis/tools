@@ -1,0 +1,14 @@
+# projects
+node_modules
+packages/plugin-templates/**/bundle
+packages/plugin-templates/**/public
+
+# bundle
+lib
+bin
+
+# log cache
+.pnpm-debug.log
+
+# log
+.pnpm-debug.log
