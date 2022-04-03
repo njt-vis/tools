@@ -1,1 +1,1 @@
-export { startup as default } from './service/app';
+export { startup as default } from './server/app';

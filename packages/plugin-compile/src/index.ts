@@ -1,2 +1,7 @@
 export { compile } from './compile';
-export { cleanBundleCache, copyToBundleFolder } from './tools';
+export {
+  getApplication,
+  cleanBundleCache,
+  copyFileToBundle,
+  copyFolderToBundle,
+} from './tools';

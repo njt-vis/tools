@@ -1,6 +1,7 @@
 import { existsSync } from 'fs';
 import { resolve } from 'path';
 import webpack from 'webpack';
+
 import { formatWebpackConfig } from './webpack-main';
 import logger from './utils/logger';
 import { handlePluginCompileConfig } from './types-handler';
@@ -16,12 +17,12 @@ const createWebpackConfig = (...configs) => {
 
 const getCustomWebpackConfig = () => {
   const customConfigPath = resolve('webpack.config.merge.js');
-  const result = {};
+  const config = {};
   if (existsSync(customConfigPath)) {
     const webpackConfigCustom = require(customConfigPath);
-    Object.assign(result, webpackConfigCustom);
+    Object.assign(config, webpackConfigCustom);
   }
-  return result;
+  return config;
 };
 
 function build(options: PluginCompileConfigModel): Promise<string> {

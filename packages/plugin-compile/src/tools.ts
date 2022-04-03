@@ -1,9 +1,15 @@
 import * as fs from 'fs';
 
+import { join } from 'path';
 import copy from 'recursive-copy';
 import logger from './utils/logger';
 
 import { getBuilderConfig } from './engine-config';
+import { readApplicationFile } from './utils/common';
+
+export function getApplication(): PluginManifestModel | void {
+  return readApplicationFile();
+}
 
 export function cleanBundleCache(
   mode: EnvMode
@@ -14,7 +20,7 @@ export function cleanBundleCache(
   });
 }
 
-export async function copyToBundleFolder(
+export async function copyFolderToBundle(
   mode: EnvMode,
   folder: string
 ): Promise<void> {
@@ -24,4 +30,15 @@ export async function copyToBundleFolder(
   } catch (error) {
     logger.error(`Copy failed: ${error}`);
   }
+}
+
+export function copyFileToBundle(
+  mode: EnvMode,
+  filepath: string,
+  filename: string
+): void {
+  fs.copyFileSync(
+    join(filepath, filename),
+    join(getBuilderConfig(mode).output, filename)
+  );
 }

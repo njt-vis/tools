@@ -57,6 +57,10 @@ const options = [
     content: '-f, --folder <folder>',
     desc: 'The folder for download template.',
   },
+  {
+    content: '--hot',
+    desc: 'Hot update plugin render.',
+  },
 ];
 
 options.forEach(({ content, desc }) => {

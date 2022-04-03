@@ -4,7 +4,7 @@ export const formatSidebarItemConfig = ({
 }: PluginManifestModel): PluginCompileConfigModel => ({
   name,
   entry: {
-    'sidebar-item': './src/main.ts',
+    'sidebar-item': './src/main',
   },
   classPrefix: 'name',
   version,

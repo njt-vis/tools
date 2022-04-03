@@ -11,14 +11,16 @@ import { REPOSITORY_INFO } from '../../setting';
 const download = require('download-git-repo');
 
 // 考虑可能根据不同入参进入不同交互流
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 async function create(options: CommandOptions) {
   const { folder } = options;
   if (!folder) {
     logger.error('Lost param folder to download template.');
-    return;
+    process.exit(1);
   }
   if (isFolder(resolve(folder))) {
     logger.error(`Folder ${folder} is already exist.`);
+    process.exit(1);
   }
 
   try {
@@ -59,6 +61,7 @@ async function create(options: CommandOptions) {
     );
   } catch (error) {
     logger.error(error as Error);
+    process.exit(1);
   }
 }
 

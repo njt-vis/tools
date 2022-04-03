@@ -72,19 +72,18 @@ class Logger {
   private format(level, message) {
     const { formatTimeStr } = this.options;
     const logTime = formatTimeStr ? getStandardTimeStr() : new Date();
+    const content =
+      typeof message === 'string' ? message : JSON.stringify(message, null, 2);
+
     return `${chalk.green(wrap(logTime))} ${chalkLogLevel(level)} ${wrap(
       this.namespace
-    )} - ${message}`;
+    )} - ${content}`;
   }
 
   private log(level, message, ...rest): (...data: any[]) => any {
     const fn = consoleMethods[level];
     if (!this.isEnabledLevel(level) || !fn) return () => null;
-    return fn.call(
-      console,
-      this.format(level, JSON.stringify(message, null, 2)),
-      ...rest
-    );
+    return fn.call(console, this.format(level, message), ...rest);
   }
 
   /**

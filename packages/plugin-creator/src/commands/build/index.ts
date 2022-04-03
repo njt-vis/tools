@@ -3,7 +3,8 @@ import { resolve } from 'path';
 import {
   compile,
   cleanBundleCache,
-  copyToBundleFolder,
+  copyFileToBundle,
+  copyFolderToBundle,
 } from '@njt-vis-tools/plugin-compile';
 
 import logger from '../../utils/logger';
@@ -14,9 +15,11 @@ async function execBuild(_options: CommandOptions): Promise<any> {
 
   const mode = 'production';
 
-  cleanBundleCache(mode);
+  await cleanBundleCache(mode);
 
-  await copyToBundleFolder(mode, resolve('static'));
+  await copyFolderToBundle(mode, resolve('static'));
+
+  copyFileToBundle(mode, resolve(), 'application.json');
 
   await compile({ mode });
 
