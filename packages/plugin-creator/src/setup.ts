@@ -5,9 +5,7 @@ import { Command } from 'commander';
 import execBuild from './commands/build';
 import execStart from './commands/start';
 import execCreate from './commands/create';
-
-// const execCreate = require('./commands/create');
-// const execStart = require('./commands/start');
+import { initialize } from './utils/initialize';
 
 const packageJson = JSON.parse(
   fs.readFileSync(require.resolve('../package.json'), 'utf8')
@@ -73,7 +71,9 @@ commands.forEach(action => {
     .description(action.description)
     .action(() => {
       const options = program.opts() as CommandOptions;
-      action.action(options);
+      initialize({}, () => {
+        action.action(options);
+      });
     });
 });
 

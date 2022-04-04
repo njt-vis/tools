@@ -6,6 +6,7 @@ import { getApplication } from '@njt-vis-tools/plugin-compile';
 import logger from '../../../utils/logger';
 import { buildForEnv } from '../../../utils/build';
 import { IO_EVENTS } from '../socket/events';
+import { getPluginStoreByPath } from '../../../utils/common';
 
 let timer: NodeJS.Timeout | null = null;
 
@@ -13,7 +14,7 @@ async function hotBuild(io: any) {
   const application = getApplication();
 
   try {
-    await buildForEnv('development');
+    await buildForEnv({ mode: 'development' });
     io.emit(IO_EVENTS.HOT_BUNDLE_SUCCESS, application);
   } catch (error) {
     logger.error(error as Error);
@@ -22,8 +23,12 @@ async function hotBuild(io: any) {
 }
 
 export function hotUpdate(io: any): void {
+  logger.info('Listen . . .');
   const root = path.resolve('src');
+
   fs.watch(root, () => {
+    if (!getPluginStoreByPath(path.resolve())?.hot) return;
+
     if (timer) {
       clearTimeout(timer);
       timer = null;

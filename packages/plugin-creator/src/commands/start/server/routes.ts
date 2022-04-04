@@ -4,6 +4,13 @@ import { API_PREFIX } from '../../../setting';
 
 const router = new Router({ prefix: API_PREFIX });
 
+router.get('/is_alive', async ctx => {
+  ctx.body = {
+    code: 0,
+    data: 'alive',
+  };
+});
+
 router.post('/hot_bundle', async ctx => {
   try {
     await compile({ mode: 'development' });

@@ -19,7 +19,11 @@
       "esnext"
     ],
     "baseUrl": "./src",
-    "newLine": "lf"
+    "newLine": "lf",
+    "types": [
+      "@types/node",
+      "@njt-vis-tools/creator-types"
+    ]
   },
   "include": [
     "src",

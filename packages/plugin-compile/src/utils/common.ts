@@ -4,7 +4,7 @@ import logger from './logger';
 
 const applicationFile = 'application.json';
 
-export const readApplicationFile = (): PluginManifestModel | void => {
+export const readApplicationFile = (): ManifestModel | void => {
   let pluginManifest;
 
   try {

@@ -1,15 +1,15 @@
 import * as path from 'path';
 import http from 'http';
 
-import {
-  compile,
-  getApplication,
-  copyFileToBundle,
-  cleanBundleCache,
-} from '@njt-vis-tools/plugin-compile';
+import { getApplication } from '@njt-vis-tools/plugin-compile';
 
-import logger from '../../../utils/logger';
 import router from './routes';
+import logger from '../../../utils/logger';
+import {
+  addPluginStore,
+  isPluginAlive,
+  isPortOccupied,
+} from '../../../utils/common';
 import { hotUpdate } from './listener';
 
 const SocketIO = require('socket.io');
@@ -33,13 +33,31 @@ const io = SocketIO(server, {
   },
 });
 
-const mode = 'development';
-
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export async function startup({ port, hot }: CommandOptions) {
-  await cleanBundleCache(mode);
-  await compile({ mode });
-  copyFileToBundle(mode, path.resolve(), 'application.json');
+  if (!port) {
+    logger.error('Option port is must.');
+    return;
+  }
+
+  if (Number.isNaN(Number(port))) {
+    logger.error('Option port should be a number.');
+    return;
+  }
+
+  const isAlive = await isPluginAlive();
+
+  if (isAlive) {
+    logger.error('Plugin is alive.');
+    return;
+  }
+
+  const isOccupied = await isPortOccupied(Number(port));
+
+  if (isOccupied) {
+    logger.error(`Port ${port} is occupied.`);
+    return;
+  }
 
   app.use(
     cors({
@@ -55,11 +73,6 @@ export async function startup({ port, hot }: CommandOptions) {
     ctx.io = io;
     await next();
   });
-  // 监听文件变化, 推送消息
-  if (hot) {
-    hotUpdate(io);
-  }
-  logger.info('Listen . . .');
 
   // 静态资源目录(development 构建目标目录)
   app.use(
@@ -79,4 +92,13 @@ export async function startup({ port, hot }: CommandOptions) {
     logger.info(`PUBLIC_URL: http://127.0.0.1:${port}/`);
     logger.info('Development server is ready.');
   });
+
+  // 添加存储
+  addPluginStore({
+    port: Number(port),
+    hot: hot ?? false,
+  });
+
+  // 监听文件变化
+  hotUpdate(io);
 }

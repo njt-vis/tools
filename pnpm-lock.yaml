@@ -12,6 +12,7 @@ importers:
     specifiers:
       '@babel/core': ^7.14.8
       '@babel/preset-env': ^7.16.11
+      '@njt-vis-tools/creator-types': workspace:^1.0.0
       '@njt-vis-tools/plugin-logger': workspace:^0.0.0
       '@types/node': ^17.0.21
       autoprefixer: ^10.4.2
@@ -35,6 +36,7 @@ importers:
     dependencies:
       '@babel/core': 7.17.5
       '@babel/preset-env': 7.16.11_@babel+core@7.17.5
+      '@njt-vis-tools/creator-types': link:../types
       '@njt-vis-tools/plugin-logger': link:../plugin-logger
       '@types/node': 17.0.21
       autoprefixer: 10.4.2_postcss@8.4.8
@@ -60,6 +62,7 @@ importers:
     specifiers:
       '@inquirer/select': ^0.0.18-alpha.0
       '@koa/cors': ^3.1.0
+      '@njt-vis-tools/creator-types': workspace:^1.0.0
       '@njt-vis-tools/plugin-compile': workspace:^1.0.0
       '@njt-vis-tools/plugin-logger': workspace:^0.0.0
       '@types/koa__router': ^8.0.11
@@ -71,13 +74,15 @@ importers:
       koa-logger: ^3.2.1
       koa-router: ^10.0.0
       koa-send: ^5.0.1
-      koa-static: ^5.0.0
       koa-static-cache: ^5.1.4
+      nanoid: ^3.3.2
       ora: 5.4.1
       socket.io: ^4.1.3
+      yaml: ^1.10.2
     dependencies:
       '@inquirer/select': 0.0.18-alpha.0
       '@koa/cors': 3.2.0
+      '@njt-vis-tools/creator-types': link:../types
       '@njt-vis-tools/plugin-compile': link:../plugin-compile
       '@njt-vis-tools/plugin-logger': link:../plugin-logger
       '@types/koa__router': 8.0.11
@@ -89,10 +94,11 @@ importers:
       koa-logger: 3.2.1
       koa-router: 10.1.1
       koa-send: 5.0.1
-      koa-static: 5.0.0
       koa-static-cache: 5.1.4
+      nanoid: 3.3.2
       ora: 5.4.1
       socket.io: 4.4.1
+      yaml: 1.10.2
 
   packages/plugin-logger:
     specifiers:
@@ -120,6 +126,9 @@ importers:
       eslint-plugin-prettier: 4.0.0_cfc9253cc6cf8e63ed6f63a6b600e6b9
       prettier: 2.5.1
       typescript: 4.6.2
+
+  packages/types:
+    specifiers: {}
 
 packages:
 
@@ -4273,16 +4282,6 @@ packages:
       mz: 2.7.0
     dev: false
 
-  /koa-static/5.0.0:
-    resolution: {integrity: sha512-UqyYyH5YEXaJrf9S8E23GoJFQZXkBVJ9zYYMPGz919MSX1KuvAcycIuS0ci150HCoPf4XQVhQ84Qf8xRPWxFaQ==}
-    engines: {node: '>= 7.6.0'}
-    dependencies:
-      debug: 3.2.7
-      koa-send: 5.0.1
-    transitivePeerDependencies:
-      - supports-color
-    dev: false
-
   /koa/2.13.4:
     resolution: {integrity: sha512-43zkIKubNbnrULWlHdN5h1g3SEKXOEzoAlRsHOTFpnlDu8JlAOZSMJBLULusuXRequboiwJcj5vtYXKB3k7+2g==}
     engines: {node: ^4.8.4 || ^6.10.1 || ^7.10.1 || >= 8.1.4}
@@ -4646,6 +4645,12 @@ packages:
 
   /nanoid/3.3.1:
     resolution: {integrity: sha512-n6Vs/3KGyxPQd6uO0eH4Bv0ojGSUvuLlIHtC3Y0kEO23YRge8H9x1GCzLn28YX0H66pMkxuaeESFq4tKISKwdw==}
+    engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
+    hasBin: true
+    dev: false
+
+  /nanoid/3.3.2:
+    resolution: {integrity: sha512-CuHBogktKwpm5g2sRgv83jEy2ijFzBwMoYA60orPDR7ynsLijJDqgsi4RDGj3OJpy3Ieb+LYwiRmIOGyytgITA==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
     dev: false
@@ -6648,7 +6653,7 @@ packages:
     resolution: {integrity: sha1-m7knkNnA7/7GO+c1GeEaNQGaOnI=}
 
   /yaml/1.10.2:
-    resolution: {integrity: sha1-IwHF/78StGfejaIzOkWeKeeSDks=}
+    resolution: {integrity: sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==}
     engines: {node: '>= 6'}
     dev: false
 

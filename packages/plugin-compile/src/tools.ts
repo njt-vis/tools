@@ -7,7 +7,7 @@ import logger from './utils/logger';
 import { getBuilderConfig } from './engine-config';
 import { readApplicationFile } from './utils/common';
 
-export function getApplication(): PluginManifestModel | void {
+export function getApplication(): ManifestModel | void {
   return readApplicationFile();
 }
 

@@ -7,7 +7,7 @@ import { getBuilderConfig } from '../engine-config';
 
 const handlerMaps = new Map<
   PluginType,
-  (manifest: PluginManifestModel) => PluginCompileConfigModel
+  (manifest: ManifestModel) => PluginCompileConfigModel
 >();
 
 handlerMaps.set('SIDEBAR_ITEM', formatSidebarItemConfig);
@@ -27,7 +27,7 @@ const handleClassPrefix = (
 };
 
 const handle = (
-  manifest: PluginManifestModel
+  manifest: ManifestModel
 ): PluginCompileConfigModel | undefined => {
   const handleByPluginType = handlerMaps.get(manifest.type);
 
