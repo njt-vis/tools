@@ -18,6 +18,7 @@ export const readApplicationFile = (): ApplicationModel | void => {
   return pluginManifest;
 };
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function compose(...fns) {
   return fns.reduce((prev, next) => args => next(prev(args)));
 }

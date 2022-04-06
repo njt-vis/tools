@@ -22,6 +22,7 @@ async function hotBuild(io: any) {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function hotUpdate(io: any): void {
   logger.info('Listen . . .');
   const root = path.resolve('src');

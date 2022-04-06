@@ -1,7 +1,13 @@
 {
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "npm run lint:es && npm run lint:ts && npm run lint:prettier",
+    "lint:es": "eslint --ext .ts",
+    "lint:ts": "tsc --project ./tsconfig.json --noEmit",
+    "lint:prettier": "prettier --list-different \"packages/**/src/**/*.ts\"",
+    "fix": "npm run fix:es && npm run fix:prettier",
+    "fix:es": "eslint --ext .ts ./ --cache --fix",
+    "fix:prettier": "prettier --write \"packages/**/src/**/*.ts\""
   },
   "author": "xiaoYown",
   "license": "ISC",

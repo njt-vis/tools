@@ -46,7 +46,7 @@ const consoleMethods: Record<string, (...data: any[]) => any> = {
 let level = DEFAULT_LEVEL;
 
 class Logger {
-  constructor(name, options = {}) {
+  constructor(name: string, options = {}) {
     this.options = { formatTimeStr: true };
     this.namespace = name;
     options && (this.options = { ...this.options, ...options });
@@ -104,23 +104,27 @@ class Logger {
 
   public trace = (
     message: string | Error,
-    ...rest
+    ...rest: any[]
   ): ((...data: any[]) => any) => this.log('TRACE', message, ...rest);
 
   public debug = (
     message: string | Error,
-    ...rest
+    ...rest: any[]
   ): ((...data: any[]) => any) => this.log('DEBUG', message, ...rest);
 
-  public info = (message: string | Error, ...rest): ((...data: any[]) => any) =>
-    this.log('INFO', message, ...rest);
+  public info = (
+    message: string | Error,
+    ...rest: any[]
+  ): ((...data: any[]) => any) => this.log('INFO', message, ...rest);
 
-  public warn = (message: string | Error, ...rest): ((...data: any[]) => any) =>
-    this.log('WARN', message, ...rest);
+  public warn = (
+    message: string | Error,
+    ...rest: any[]
+  ): ((...data: any[]) => any) => this.log('WARN', message, ...rest);
 
   public error = (
     message: string | Error,
-    ...rest
+    ...rest: any[]
   ): ((...data: any[]) => any) => this.log('ERROR', message, ...rest);
 }
 
