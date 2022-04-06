@@ -60,9 +60,15 @@ function build(options: PluginCompileConfigModel): Promise<string> {
   });
 }
 
-export const compile = ({ mode }: { mode: EnvMode }): Promise<string> => {
+export const compile = ({
+  mode,
+  publicPath,
+}: {
+  mode: EnvMode;
+  publicPath?: string;
+}): Promise<string> => {
   const compileConfig: PluginCompileConfigModel | string =
-    handlePluginCompileConfig({ mode });
+    handlePluginCompileConfig({ mode, publicPath });
 
   return new Promise((resolve, reject) => {
     if (typeof compileConfig === 'string') {
@@ -76,6 +82,7 @@ export const compile = ({ mode }: { mode: EnvMode }): Promise<string> => {
         resolve(message);
       })
       .catch(error => {
+        console.log(error);
         logger.error(error);
       });
   });

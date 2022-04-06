@@ -7,7 +7,7 @@ import { getBuilderConfig } from '../engine-config';
 
 const handlerMaps = new Map<
   PluginType,
-  (manifest: ManifestModel) => PluginCompileConfigModel
+  (manifest: ApplicationModel) => Omit<PluginCompileConfigModel, 'mode'>
 >();
 
 handlerMaps.set('SIDEBAR_ITEM', formatSidebarItemConfig);
@@ -27,8 +27,8 @@ const handleClassPrefix = (
 };
 
 const handle = (
-  manifest: ManifestModel
-): PluginCompileConfigModel | undefined => {
+  manifest: ApplicationModel
+): Omit<PluginCompileConfigModel, 'mode'> | undefined => {
   const handleByPluginType = handlerMaps.get(manifest.type);
 
   if (!handleByPluginType) return undefined;
@@ -45,24 +45,23 @@ const handle = (
  */
 export const handlePluginCompileConfig = ({
   mode,
+  publicPath,
 }: {
   mode: EnvMode;
+  publicPath?: string;
 }): PluginCompileConfigModel | string => {
-  const manifestFile = readApplicationFile();
+  const application = readApplicationFile();
 
-  if (!manifestFile) return 'Lost file application.json';
+  if (!application) return 'Lost file application.json';
 
-  const config = handle(manifestFile);
+  const config: Omit<PluginCompileConfigModel, 'mode'> | undefined =
+    handle(application);
 
   if (!config) {
-    return `No plugin type like ${manifestFile.type}`;
+    return `No plugin type like ${application.type}`;
   }
 
-  if (config) {
-    const { output } = getBuilderConfig(mode);
-    logger.info(output);
-    Object.assign(config, { output: resolve(output) });
-  }
-
-  return config;
+  const { output } = getBuilderConfig(mode);
+  logger.info(output);
+  return { ...config, mode, publicPath, output: resolve(output) };
 };

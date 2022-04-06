@@ -15,7 +15,7 @@ export async function buildForEnv(props: BuildForEnvProps): Promise<null> {
   const { mode } = props;
   try {
     await cleanBundleCache(mode);
-    await compile({ mode });
+    await compile({ mode, publicPath: process.env.PUBLIC_PATH });
     await copyFolderToBundle(mode, path.resolve('static'));
     await copyFileToBundle(mode, path.resolve(), 'application.json');
     return null;

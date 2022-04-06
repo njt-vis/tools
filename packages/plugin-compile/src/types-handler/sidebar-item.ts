@@ -1,7 +1,7 @@
 export const formatSidebarItemConfig = ({
   name,
   version,
-}: ManifestModel): PluginCompileConfigModel => ({
+}: ApplicationModel): Omit<PluginCompileConfigModel, 'mode'> => ({
   name,
   entry: {
     'sidebar-item': './src/main',

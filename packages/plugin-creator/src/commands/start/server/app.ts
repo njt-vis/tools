@@ -11,6 +11,7 @@ import {
   isPortOccupied,
 } from '../../../utils/common';
 import { hotUpdate } from './listener';
+import { buildForEnv } from '../../../utils/build';
 
 const SocketIO = require('socket.io');
 const Koa = require('koa');
@@ -80,13 +81,12 @@ export async function startup({ port, hot }: CommandOptions) {
       prefix: baseURL,
     })
   );
-  app.use(
-    staticCache(path.resolve('static'), {
-      prefix: baseURL,
-    })
-  );
+  // 配置 PUBLIC_PATH 环境变量
+  process.env.PUBLIC_PATH = `http://127.0.0.1:${port}${baseURL}`;
   // 路由
   app.use(router.routes()).use(router.allowedMethods());
+
+  await buildForEnv({ mode: 'development' });
 
   server.listen(port, () => {
     logger.info(`PUBLIC_URL: http://127.0.0.1:${port}/`);

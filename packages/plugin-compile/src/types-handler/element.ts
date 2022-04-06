@@ -1,7 +1,7 @@
 export const formatElementConfig = ({
   name,
   version,
-}: ManifestModel): PluginCompileConfigModel => ({
+}: ApplicationModel): Omit<PluginCompileConfigModel, 'mode'> => ({
   name,
   entry: {
     attrbar: 'src/option-panel/index.ts',
