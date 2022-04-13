@@ -8,7 +8,8 @@
     "lint:prettier": "prettier --list-different \"packages/**/src/**/*.ts\"",
     "fix": "npm run fix:es && npm run fix:prettier",
     "fix:es": "eslint --ext .ts ./ --cache --fix",
-    "fix:prettier": "prettier --write \"packages/**/src/**/*.ts\""
+    "fix:prettier": "prettier --write \"packages/**/src/**/*.ts\"",
+    "prepare": "husky install"
   },
   "author": "xiaoYown",
   "license": "ISC",
