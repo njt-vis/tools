@@ -12,3 +12,6 @@ bin
 
 # log
 .pnpm-debug.log
+
+# eslint cache
+.eslintcache

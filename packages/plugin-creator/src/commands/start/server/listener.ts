@@ -14,8 +14,15 @@ async function hotBuild(io: any) {
   const application = getApplication();
 
   try {
+    io.emit('broadcast', {
+      name: IO_EVENTS.HOT_BUILDING,
+      application,
+    });
     await buildForEnv({ mode: 'development' });
-    io.emit(IO_EVENTS.HOT_BUNDLE_SUCCESS, application);
+    io.emit('broadcast', {
+      name: IO_EVENTS.HOT_BUNDLE_SUCCESS,
+      application,
+    });
   } catch (error) {
     logger.error(error as Error);
     io.emit(IO_EVENTS.HOT_BUNDLE_FAILED, application);
@@ -34,6 +41,7 @@ export function hotUpdate(io: any): void {
       clearTimeout(timer);
       timer = null;
     }
+
     timer = setTimeout(() => {
       hotBuild(io);
     }, 200);
